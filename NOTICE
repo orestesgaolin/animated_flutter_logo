@@ -1,0 +1,9 @@
+Some parts of the Flutter logo are based on
+code from Flutter repository https://github.com/flutter/flutter/
+Copyright 2014 The Flutter Authors
+licensed under BSD-3 clause https://github.com/flutter/flutter/blob/master/LICENSE
+
+Code in matrix.dart is a port of RotationMatrix library
+by Glenn Murray available online on 
+https://sites.google.com/site/glennmurray/Home/rotation-matrices-and-formulas
+licensed under Apache License, version 2.0 http://www.apache.org/licenses/LICENSE-2.0
