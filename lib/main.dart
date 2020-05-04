@@ -115,14 +115,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             )));
 
     //frames 100-140
-    topBeamClip = Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-      parent: animationController,
-      curve: Interval(
-        100 / tf * animLimit,
-        140 / tf * animLimit,
-        curve: Curves.easeOutCubic,
+    topBeamClip = Tween<double>(begin: 1.0, end: 0.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: Interval(
+          100 / tf * animLimit,
+          140 / tf * animLimit,
+          curve: Curves.easeOutCubic,
+        ),
       ),
-    ));
+    );
 
     //frames 130-170
     topBeamBounceUp =
@@ -144,13 +146,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       ),
     ));
 
-    scaleTween = Tween<double>(begin: 1.03, end: 1.0).animate(CurvedAnimation(
+    scaleTween = Tween<double>(begin: 1.03, end: 1.0).animate(
+      CurvedAnimation(
         parent: animationController,
         curve: Interval(
           100 / tf * animLimit,
           170 / tf * animLimit,
           curve: Curves.easeInOut,
-        )));
+        ),
+      ),
+    );
   }
 
   @override
@@ -164,18 +169,19 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return Scaffold(
       body: Stack(
         children: [
-          Align(
-            alignment: AlignmentDirectional.topEnd,
-            child: IconButton(
-              icon: Icon(Icons.settings),
-              color: _showSettings ? Colors.black54 : Colors.black12,
-              onPressed: () {
-                setState(() {
-                  _showSettings = !_showSettings;
-                });
-              },
+          if (MediaQuery.of(context).size.width > 600)
+            Align(
+              alignment: AlignmentDirectional.topEnd,
+              child: IconButton(
+                icon: Icon(Icons.settings),
+                color: _showSettings ? Colors.black54 : Colors.black12,
+                onPressed: () {
+                  setState(() {
+                    _showSettings = !_showSettings;
+                  });
+                },
+              ),
             ),
-          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
@@ -190,8 +196,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   AnimatedBuilder(
                     animation: animationController,
                     builder: (context, child) {
+                      //workaround for small screens
+                      var scale = 1.0;
+                      if (MediaQuery.of(context).size.width < 600) {
+                        scale = 0.7;
+                      }
                       return Transform.scale(
-                        scale: scaleTween.value,
+                        scale: scaleTween.value * scale,
                         child: CustomPaint(
                           painter: AnimatedLogoPainter(
                               beamRotation: beamRotation.value,
@@ -206,8 +217,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   topBeamBounceDown.value,
                               showClippingPaths: _showClippingPaths),
                           child: Container(
-                            height: 300,
-                            width: 300,
+                            height: 300 * scale,
+                            width: 300 * scale,
                             color: Colors.transparent,
                           ),
                         ),
@@ -471,6 +482,7 @@ class AnimatedLogoPainter extends CustomPainter {
 
     canvas.drawPath(bottomDarkBeam, darkPaint);
     canvas.restore();
+
     if (showClippingPaths) {
       canvas.save();
       canvas.drawPath(clipPath, Paint()..color = Colors.green);
