@@ -8,6 +8,6 @@ Flutter Animated Logo done with custom painters and some rotation matrices
 
 The animation is also available [on CodePen](https://codepen.io/orestesgaolin/pen/yLYVQGe).
 
-Learn how it was done in the blog post.
+Learn how it was done in [the blog post](https://roszkowski.dev/2020/flutter-animated-logo/).
 
 [Follow me on Twitter](https://twitter.com/OrestesGaolin) for more animations and UI challenges.
